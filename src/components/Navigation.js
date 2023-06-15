@@ -3,7 +3,6 @@ import React from "react";
 // import { ThemeContext } from "./ThemeContext";
 import { Link } from "react-router-dom";
 import { Navbar, NavItem,Icon } from "react-materialize";
-// import "../App.css";
 
 export default function Navigation() {
   // const { theme, toggle, dark } = useContext(ThemeContext);
