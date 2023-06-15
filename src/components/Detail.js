@@ -13,7 +13,7 @@ const Detail = () => {
     <div className='container'>
      <div className='product-card'>
      <div className='badge'>{player.name}</div>
-    	<div className='product-tumb'>
+    	<div className='product-thumb'>
     		<img src={`../${player.img}`} alt=''/>
     	</div>
     	<div className='product-details'>
