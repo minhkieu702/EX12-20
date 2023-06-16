@@ -23,9 +23,11 @@ const Contact = () => {
       message: '',
       agree: false,
     },
-    onSubmit: (values) => {
-      // Handle form submission
+    onSubmit: (values)=>{
+      alert(JSON.stringify(formik.values))
     },
+//Convert to JSON string and show in alert box.
+
     validationSchema: Yup.object({
       name: Yup.string().required('Required.').min(2, 'Must be 2 characters or more'),
       email: Yup.string().required('Required.').email('Invalid email'),
