@@ -1,9 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, FormControlLabel, Switch, TextField, Typography } from '@material-ui/core';
+import { Button, ButtonBase, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, Switch, TextField, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Alert } from 'react-bootstrap';
 const Add = () => {
-    const baseURL = `...`
+    const [open, setOpen] = useState(false);
+    const handleClose = () => {
+   setOpen(false);
+      };
+
+
+    const baseURL = `............`
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -15,8 +23,22 @@ const Add = () => {
             img: "",
             top: false
         },
-        onSubmit: (values) => {
+        onSubmit: (values)=>{
+            fetch(baseURL, {  method: 'POST',
+            body: JSON.stringify(values),  headers: {
+            'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+            }).then(response =>{
+              if(!response.ok){
+                  throw new Error(`HTTP Status: ${response.status}`)
+              }
+              return response.json()
+            })            
+            .then(data => setOpen(true))
+            .catch(error => console.log(error.message));
         },
+        
         validationSchema: Yup.object({
             name: Yup.string().required("Required.").min(2, "Must be 2 characters or more"),
             nation: Yup.string().required("Required.").min(2, "Must be 2 characters or more"),
@@ -124,6 +146,29 @@ const Add = () => {
                 <br />
                 <Button className="btn btn-primary" variant="contained" size="small" type='submit'>Add</Button>
             </form>
+            <Dialog
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">
+      {"Congraturation"}
+    </DialogTitle>
+    <DialogContent>
+      <DialogContentText id="alert-dialog-description">
+      <Alert severity="success">
+  <alert>Adding successful!</alert>
+</Alert>
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button><Link to='/dashboard' style={{textDecoration:"none"}}>Dashboard</Link></Button>
+      <Button autoFocus onClick={handleClose}>
+       Close
+      </Button>
+    </DialogActions>
+  </Dialog>
 
         </div>
     )
